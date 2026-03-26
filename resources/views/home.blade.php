@@ -328,7 +328,7 @@
                         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4 overflow-hidden"
                         @keydown.escape.window="showModal = false">
                         <button @click="showModal = false"
-                            class="absolute top-2 right-4 text-5xl leading-none text-white/80 hover:text-white"
+                            class="absolute top-3 right-4 md:top-5 md:right-6 text-5xl leading-none text-white/80 hover:text-white"
                             aria-label="Zatvoriť modal">&times;</button>
                         <!-- Modal Box -->
                         <div class="w-full max-w-2xl h-[85vh] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col"

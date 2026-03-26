@@ -11,6 +11,17 @@ Route::get('/', function () {
     $configuredWeeklyMenuPostUrl = config('instagram.instagram.weekly_menu_post_url');
     $instagramProfileUrl = config('instagram.instagram.profile_url');
 
+    if (!empty($configuredWeeklyMenuPostUrl)) {
+        $hasValidInstagramPostPath = preg_match(
+            '~^https?://(www\.)?instagram\.com/(p|reel|tv)/[A-Za-z0-9_-]{5,}/?(\?.*)?$~i',
+            $configuredWeeklyMenuPostUrl
+        ) === 1;
+
+        if (!$hasValidInstagramPostPath) {
+            $configuredWeeklyMenuPostUrl = null;
+        }
+    }
+
     $resolvedPinnedPostUrl = null;
     $latestPostUrl = null;
 
