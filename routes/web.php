@@ -11,6 +11,7 @@ Route::get('/', function () {
     $instagramToken = config('instagram.token');
     $configuredWeeklyMenuPostUrl = config('instagram.weekly_menu_post_url');
     $instagramProfileUrl = config('instagram.profile_url');
+    $instagramDebug = (bool) config('instagram.debug');
 
     if (!empty($configuredWeeklyMenuPostUrl)) {
         $hasValidInstagramPostPath = preg_match(
@@ -20,11 +21,14 @@ Route::get('/', function () {
 
         if (!$hasValidInstagramPostPath) {
             $configuredWeeklyMenuPostUrl = null;
+        } else {
+            $resolvedSource = 'configured_weekly_menu_url';
         }
     }
 
     $resolvedPinnedPostUrl = null;
     $latestPostUrl = null;
+    $resolvedSource = null;
 
     $resolvePostUrlFromShortcode = static function (?string $shortcode, ?string $mediaType = null): ?string {
         if (empty($shortcode)) {
@@ -86,6 +90,7 @@ Route::get('/', function () {
 
                         if (!empty($pinnedForUsers) && !empty($shortcode)) {
                             $resolvedPinnedPostUrl = $resolvePostUrlFromShortcode($shortcode);
+                            $resolvedSource = 'profile_api_pinned';
                             break;
                         }
                     }
@@ -94,6 +99,7 @@ Route::get('/', function () {
                         $latestShortcode = data_get($edges, '0.node.shortcode');
                         if (!empty($latestShortcode)) {
                             $latestPostUrl = $resolvePostUrlFromShortcode($latestShortcode);
+                            $resolvedSource = 'profile_api_latest';
                         }
                     }
                 }
@@ -124,6 +130,9 @@ Route::get('/', function () {
                         }
 
                         $latestPostUrl = $resolvePostUrlFromShortcode($matchedCode, $matchedType);
+                        if (!empty($latestPostUrl)) {
+                            $resolvedSource = 'profile_html_fallback';
+                        }
                     }
                 } catch (\Throwable $exception) {
                     $latestPostUrl = null;
@@ -148,22 +157,40 @@ Route::get('/', function () {
 
             if ($instagramResponse && $instagramResponse->successful()) {
                 $latestPostUrl = data_get($instagramResponse->json(), 'data.0.permalink');
+                if (!empty($latestPostUrl)) {
+                    $resolvedSource = 'graph_api_latest';
+                }
             }
         } catch (\Throwable $exception) {
             $latestPostUrl = null;
         }
     }
 
-    if (empty($configuredWeeklyMenuPostUrl) && empty($resolvedPinnedPostUrl) && empty($latestPostUrl)) {
+    $finalWeeklyMenuPostUrl = $configuredWeeklyMenuPostUrl ?: $resolvedPinnedPostUrl ?: $latestPostUrl;
+
+    if ($instagramDebug) {
+        Log::info('Instagram weekly menu resolution debug.', [
+            'profile_url' => $instagramProfileUrl,
+            'has_token' => !empty($instagramToken),
+            'configured_weekly_url' => $configuredWeeklyMenuPostUrl,
+            'resolved_pinned_url' => $resolvedPinnedPostUrl,
+            'resolved_latest_url' => $latestPostUrl,
+            'resolved_source' => $resolvedSource,
+            'final_url' => $finalWeeklyMenuPostUrl,
+        ]);
+    }
+
+    if (empty($finalWeeklyMenuPostUrl)) {
         Log::warning('Instagram weekly menu post could not be resolved.', [
             'profile_url' => $instagramProfileUrl,
             'configured_weekly_url' => config('instagram.weekly_menu_post_url'),
             'has_token' => !empty($instagramToken),
+            'resolved_source' => $resolvedSource,
         ]);
     }
 
     return view('home', [
-        'weekly_menu_post_url' => $configuredWeeklyMenuPostUrl ?: $resolvedPinnedPostUrl ?: $latestPostUrl,
+        'weekly_menu_post_url' => $finalWeeklyMenuPostUrl,
         'instagram_profile_url' => $instagramProfileUrl,
     ]);
 });
