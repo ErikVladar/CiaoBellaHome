@@ -317,7 +317,7 @@
                     x-effect="document.documentElement.classList.toggle('overflow-hidden', showModal)">
                     @php
                         $weeklyMenuEmbedUrl = null;
-                        if (!empty($weekly_menu_post_url) && preg_match('~instagram\\.com/(p|reel|tv)/([^/?#]+)/?~i', $weekly_menu_post_url, $instagramMatch)) {
+                        if (!empty($weekly_menu_post_url) && preg_match('~instagram\\.com/(p|reel|tv)/([A-Za-z0-9_-]{5,})/?~i', $weekly_menu_post_url, $instagramMatch)) {
                             $weeklyMenuEmbedUrl = "https://www.instagram.com/{$instagramMatch[1]}/{$instagramMatch[2]}/embed";
                         }
                     @endphp
