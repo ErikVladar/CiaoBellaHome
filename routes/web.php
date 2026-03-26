@@ -6,12 +6,15 @@ use App\Models\MenuItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 Route::get('/', function () {
     $instagramToken = config('instagram.token');
     $configuredWeeklyMenuPostUrl = config('instagram.weekly_menu_post_url');
     $instagramProfileUrl = config('instagram.profile_url');
     $instagramDebug = (bool) config('instagram.debug');
+    $weeklyMenuCacheKey = 'instagram.weekly_menu_post_url.last_success';
+    $cachedWeeklyMenuPostUrl = Cache::get($weeklyMenuCacheKey);
 
     if (!empty($configuredWeeklyMenuPostUrl)) {
         $hasValidInstagramPostPath = preg_match(
@@ -40,7 +43,18 @@ Route::get('/', function () {
         return "https://www.instagram.com/{$mediaPath}/{$shortcode}/";
     };
 
-    $instagramGet = static function (string $url, array $query = [], array $headers = []) {
+    $isValidInstagramPostUrl = static function (?string $url): bool {
+        if (empty($url)) {
+            return false;
+        }
+
+        return preg_match(
+            '~^https?://(www\.)?instagram\.com/(p|reel|tv)/[A-Za-z0-9_-]{5,}/?(\?.*)?$~i',
+            $url
+        ) === 1;
+    };
+
+    $instagramGet = function (string $url, array $query = [], array $headers = []) use ($instagramDebug) {
         try {
             $primaryResponse = Http::timeout(6)
                 ->retry(1, 250)
@@ -50,16 +64,49 @@ Route::get('/', function () {
             if ($primaryResponse->successful()) {
                 return $primaryResponse;
             }
+
+            if ($instagramDebug) {
+                Log::info('Instagram request primary attempt not successful.', [
+                    'url' => $url,
+                    'status' => $primaryResponse->status(),
+                    'query_keys' => array_keys($query),
+                ]);
+            }
         } catch (\Throwable $exception) {
+            if ($instagramDebug) {
+                Log::warning('Instagram request primary attempt threw exception.', [
+                    'url' => $url,
+                    'query_keys' => array_keys($query),
+                    'error' => $exception->getMessage(),
+                ]);
+            }
         }
 
         try {
-            return Http::timeout(6)
+            $fallbackResponse = Http::timeout(6)
                 ->retry(1, 250)
                 ->withOptions(['verify' => false])
                 ->withHeaders($headers)
                 ->get($url, $query);
+
+            if ($instagramDebug && !$fallbackResponse->successful()) {
+                Log::info('Instagram request fallback attempt not successful.', [
+                    'url' => $url,
+                    'status' => $fallbackResponse->status(),
+                    'query_keys' => array_keys($query),
+                ]);
+            }
+
+            return $fallbackResponse;
         } catch (\Throwable $exception) {
+            if ($instagramDebug) {
+                Log::warning('Instagram request fallback attempt threw exception.', [
+                    'url' => $url,
+                    'query_keys' => array_keys($query),
+                    'error' => $exception->getMessage(),
+                ]);
+            }
+
             return null;
         }
     };
@@ -102,10 +149,28 @@ Route::get('/', function () {
                             $resolvedSource = 'profile_api_latest';
                         }
                     }
+
+                    if ($instagramDebug) {
+                        Log::info('Instagram profile API response parsed.', [
+                            'edges_count' => is_array($edges) ? count($edges) : 0,
+                            'resolved_source' => $resolvedSource,
+                        ]);
+                    }
+                } elseif ($instagramDebug) {
+                    Log::info('Instagram profile API did not return successful response.', [
+                        'status' => $profileResponse?->status(),
+                        'body_snippet' => $profileResponse ? mb_substr($profileResponse->body(), 0, 300) : null,
+                    ]);
                 }
             } catch (\Throwable $exception) {
                 $resolvedPinnedPostUrl = null;
                 $latestPostUrl = null;
+
+                if ($instagramDebug) {
+                    Log::warning('Instagram profile API parsing failed.', [
+                        'error' => $exception->getMessage(),
+                    ]);
+                }
             }
 
             if (empty($resolvedPinnedPostUrl) && empty($latestPostUrl)) {
@@ -127,15 +192,29 @@ Route::get('/', function () {
                         if (preg_match('~/(p|reel|tv)/([A-Za-z0-9_-]{5,})/~', $profileHtml, $htmlMatch)) {
                             $matchedType = $htmlMatch[1];
                             $matchedCode = $htmlMatch[2];
+                        } elseif (preg_match('~"shortcode":"([A-Za-z0-9_-]{5,})"~', $profileHtml, $jsonShortcodeMatch)) {
+                            $matchedType = 'p';
+                            $matchedCode = $jsonShortcodeMatch[1];
                         }
 
                         $latestPostUrl = $resolvePostUrlFromShortcode($matchedCode, $matchedType);
                         if (!empty($latestPostUrl)) {
                             $resolvedSource = 'profile_html_fallback';
                         }
+                    } elseif ($instagramDebug) {
+                        Log::info('Instagram profile HTML fallback did not return successful response.', [
+                            'status' => $profileHtmlResponse?->status(),
+                            'body_snippet' => $profileHtmlResponse ? mb_substr($profileHtmlResponse->body(), 0, 300) : null,
+                        ]);
                     }
                 } catch (\Throwable $exception) {
                     $latestPostUrl = null;
+
+                    if ($instagramDebug) {
+                        Log::warning('Instagram profile HTML fallback parsing failed.', [
+                            'error' => $exception->getMessage(),
+                        ]);
+                    }
                 }
             }
         }
@@ -160,13 +239,33 @@ Route::get('/', function () {
                 if (!empty($latestPostUrl)) {
                     $resolvedSource = 'graph_api_latest';
                 }
+            } elseif ($instagramDebug) {
+                Log::info('Instagram Graph API did not return successful response.', [
+                    'status' => $instagramResponse?->status(),
+                    'body_snippet' => $instagramResponse ? mb_substr($instagramResponse->body(), 0, 300) : null,
+                ]);
             }
         } catch (\Throwable $exception) {
             $latestPostUrl = null;
+
+            if ($instagramDebug) {
+                Log::warning('Instagram Graph API request failed.', [
+                    'error' => $exception->getMessage(),
+                ]);
+            }
         }
     }
 
     $finalWeeklyMenuPostUrl = $configuredWeeklyMenuPostUrl ?: $resolvedPinnedPostUrl ?: $latestPostUrl;
+
+    if (empty($finalWeeklyMenuPostUrl) && $isValidInstagramPostUrl($cachedWeeklyMenuPostUrl)) {
+        $finalWeeklyMenuPostUrl = $cachedWeeklyMenuPostUrl;
+        $resolvedSource = 'cache_last_success';
+    }
+
+    if ($isValidInstagramPostUrl($finalWeeklyMenuPostUrl)) {
+        Cache::put($weeklyMenuCacheKey, $finalWeeklyMenuPostUrl, now()->addDays(14));
+    }
 
     if ($instagramDebug) {
         Log::info('Instagram weekly menu resolution debug.', [
