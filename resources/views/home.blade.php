@@ -313,19 +313,43 @@
             <p id="opening-hours" class="text-xl mt-4 animate-fade-up">Loading...</p>
             <div class="flex gap-4 mt-8">
                 <a href="/menu" class="cta-button">Objednať</a>
-                <div x-data="{ showModal: false }">
+                <div x-data="{ showModal: false }"
+                    x-effect="document.documentElement.classList.toggle('overflow-hidden', showModal)">
+                    @php
+                        $weeklyMenuEmbedUrl = null;
+                        if (!empty($weekly_menu_post_url) && preg_match('~instagram\\.com/(p|reel|tv)/([^/?#]+)/?~i', $weekly_menu_post_url, $instagramMatch)) {
+                            $weeklyMenuEmbedUrl = "https://www.instagram.com/{$instagramMatch[1]}/{$instagramMatch[2]}/embed";
+                        }
+                    @endphp
                     <button @click="showModal = true"
                         class="cta-button bg-blue-500 text-white px-4 py-2 rounded">Týždenné menu</button>
                     <!-- Modal Overlay -->
                     <div x-show="showModal" x-cloak
-                        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
+                        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4 overflow-hidden"
                         @keydown.escape.window="showModal = false">
+                        <button @click="showModal = false"
+                            class="absolute top-2 right-4 text-5xl leading-none text-white/80 hover:text-white"
+                            aria-label="Zatvoriť modal">&times;</button>
                         <!-- Modal Box -->
-                        <div class="max-w-[120vh] max-h-[90vh] overflow-y-auto rounded-lg relative w-full"
+                        <div class="w-full max-w-2xl h-[85vh] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col"
                             @click.away="showModal = false">
-                            <button @click="showModal = false"
-                                class="absolute top-2 right-2 text-2xl text-gray-400 hover:text-gray-700">&times;</button>
-                            <div id="instafeed"></div>
+                            <div class="flex-1 overflow-hidden">
+
+                                @if($weeklyMenuEmbedUrl)
+                                    <iframe
+                                        src="{{ $weeklyMenuEmbedUrl }}"
+                                        class="w-full h-full border border-gray-200 rounded"
+                                        allowtransparency="true"
+                                        allowfullscreen
+                                        loading="lazy"
+                                        title="Instagram týždenné menu"
+                                    ></iframe>
+                                @else
+                                    <div class="h-full border border-dashed border-gray-300 rounded p-4 text-gray-700 bg-gray-50 flex items-center justify-center text-center">
+                                        Príspevok s týždenným menu momentálne nie je dostupný.
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -640,8 +664,6 @@
 </body>
 
 <script>
-    window.InstaConfig = @json($ig_config);
-
     window.addEventListener("scroll", function() {
         const navbar = document.getElementById("navbar");
         if (window.scrollY > 500) {
