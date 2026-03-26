@@ -25,6 +25,16 @@ Route::get('/', function () {
     $resolvedPinnedPostUrl = null;
     $latestPostUrl = null;
 
+    $resolvePostUrlFromShortcode = static function (?string $shortcode, ?string $mediaType = null): ?string {
+        if (empty($shortcode)) {
+            return null;
+        }
+
+        $mediaPath = in_array($mediaType, ['reel', 'tv'], true) ? $mediaType : 'p';
+
+        return "https://www.instagram.com/{$mediaPath}/{$shortcode}/";
+    };
+
     if (empty($configuredWeeklyMenuPostUrl) && !empty($instagramProfileUrl)) {
         $profilePath = parse_url($instagramProfileUrl, PHP_URL_PATH) ?: '';
         $profilePath = trim($profilePath, '/');
@@ -50,7 +60,7 @@ Route::get('/', function () {
                         $shortcode = data_get($edge, 'node.shortcode');
 
                         if (!empty($pinnedForUsers) && !empty($shortcode)) {
-                            $resolvedPinnedPostUrl = "https://www.instagram.com/p/{$shortcode}/";
+                            $resolvedPinnedPostUrl = $resolvePostUrlFromShortcode($shortcode);
                             break;
                         }
                     }
@@ -58,13 +68,39 @@ Route::get('/', function () {
                     if (empty($resolvedPinnedPostUrl)) {
                         $latestShortcode = data_get($edges, '0.node.shortcode');
                         if (!empty($latestShortcode)) {
-                            $latestPostUrl = "https://www.instagram.com/p/{$latestShortcode}/";
+                            $latestPostUrl = $resolvePostUrlFromShortcode($latestShortcode);
                         }
                     }
                 }
             } catch (\Throwable $exception) {
                 $resolvedPinnedPostUrl = null;
                 $latestPostUrl = null;
+            }
+
+            if (empty($resolvedPinnedPostUrl) && empty($latestPostUrl)) {
+                try {
+                    $profileHtmlResponse = Http::timeout(5)
+                        ->retry(1, 200)
+                        ->withHeaders([
+                            'user-agent' => 'Mozilla/5.0',
+                        ])
+                        ->get("https://www.instagram.com/{$username}/");
+
+                    if ($profileHtmlResponse->successful()) {
+                        $profileHtml = $profileHtmlResponse->body();
+                        $matchedType = null;
+                        $matchedCode = null;
+
+                        if (preg_match('~/(p|reel|tv)/([A-Za-z0-9_-]{5,})/~', $profileHtml, $htmlMatch)) {
+                            $matchedType = $htmlMatch[1];
+                            $matchedCode = $htmlMatch[2];
+                        }
+
+                        $latestPostUrl = $resolvePostUrlFromShortcode($matchedCode, $matchedType);
+                    }
+                } catch (\Throwable $exception) {
+                    $latestPostUrl = null;
+                }
             }
         }
     }
