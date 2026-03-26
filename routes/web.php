@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
-    $instagramToken = config('instagram.instagram.token');
-    $configuredWeeklyMenuPostUrl = config('instagram.instagram.weekly_menu_post_url');
-    $instagramProfileUrl = config('instagram.instagram.profile_url');
+    $instagramToken = config('instagram.token');
+    $configuredWeeklyMenuPostUrl = config('instagram.weekly_menu_post_url');
+    $instagramProfileUrl = config('instagram.profile_url');
 
     if (!empty($configuredWeeklyMenuPostUrl)) {
         $hasValidInstagramPostPath = preg_match(
@@ -157,7 +157,7 @@ Route::get('/', function () {
     if (empty($configuredWeeklyMenuPostUrl) && empty($resolvedPinnedPostUrl) && empty($latestPostUrl)) {
         Log::warning('Instagram weekly menu post could not be resolved.', [
             'profile_url' => $instagramProfileUrl,
-            'configured_weekly_url' => config('instagram.instagram.weekly_menu_post_url'),
+            'configured_weekly_url' => config('instagram.weekly_menu_post_url'),
             'has_token' => !empty($instagramToken),
         ]);
     }
