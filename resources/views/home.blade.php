@@ -1,176 +1,209 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>layout</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>layout</title>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
-        <script src="//unpkg.com/alpinejs" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Lightbox2 CSS -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
-        <!-- Lightbox2 JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <!-- Lightbox2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
+    <!-- Lightbox2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 
-    </head>
+</head>
+
 <body class="font-[Quicksand]">
-{{-- <body class="font-[Tagesschrift]"> --}}
-<style>
-  @font-face {
-  font-family: 'Tagesschrift';
-  src: url('/fonts/Tagesschrift/Tagesschrift-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Quicksand';
-  src: url('/fonts/Quicksand/Quicksand-VariableFont_wght.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-  html {
-    overflow-y: scroll;
-  }
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    {{-- <body class="font-[Tagesschrift]"> --}}
+    <style>
+        @font-face {
+            font-family: 'Tagesschrift';
+            src: url('/fonts/Tagesschrift/Tagesschrift-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
 
-  @keyframes fade-down {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+        @font-face {
+            font-family: 'Quicksand';
+            src: url('/fonts/Quicksand/Quicksand-VariableFont_wght.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
 
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+        html {
+            overflow-y: scroll;
+        }
 
-  @keyframes bounce-slow {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-  .animate-fade-in {
-    animation: fade-in 1s ease-out forwards;
-  }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  .animate-fade-down {
-    animation: fade-down 1s ease-out forwards;
-  }
+        @keyframes fade-down {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
 
-  .animate-fade-up {
-    animation: fade-up 1s ease-out forwards;
-  }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  .animate-bounce-slow {
-    animation: bounce-slow 2s infinite;
-  }
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-  /* From Uiverse.io by gharsh11032000 */ 
-.cta-button {
-  margin-top:2rem;
-  cursor: pointer;
-  position: relative;
-  padding: 10px 24px;
-  font-size: 18px;
-  color: rgb(250, 250, 250);
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 10px;
-  background-color: transparent;
-  font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-  overflow: hidden;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.cta-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 50px;
-  height: 50px;
-  border-radius: inherit;
-  scale: 0;
-  z-index: -1;
-  background-color: rgb(250, 250, 250);
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
-}
+        @keyframes bounce-slow {
 
-.cta-button:hover::before {
-  scale: 5;
-}
+            0%,
+            100% {
+                transform: translateY(0);
+            }
 
-.cta-button:hover {
-  color: #212121;
-  scale: 1.1;
-  box-shadow: 0 0px 20px rgba(193, 163, 98,0.4);
-}
+            50% {
+                transform: translateY(-8px);
+            }
+        }
 
-.cta-button:active {
-  scale: 1;
-}
+        .animate-fade-in {
+            animation: fade-in 1s ease-out forwards;
+        }
 
-.cta-button-black {
-  margin-top:2rem;
-  cursor: pointer;
-  position: relative;
-  padding: 10px 24px;
-  font-size: 18px;
-  color: rgb(0, 0, 0);
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 10px;
-  background-color: transparent;
-  font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-  overflow: hidden;
-}
+        .animate-fade-down {
+            animation: fade-down 1s ease-out forwards;
+        }
 
-.cta-button-black::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 50px;
-  height: 50px;
-  border-radius: inherit;
-  scale: 0;
-  z-index: -1;
-  background-color: rgb(0, 0, 0);
-  transition: all 0.6s cubic-bezier(255, 255, 255, 1);
-}
+        .animate-fade-up {
+            animation: fade-up 1s ease-out forwards;
+        }
 
-.cta-button-black:hover::before {
-  scale: 5;
-}
+        .animate-bounce-slow {
+            animation: bounce-slow 2s infinite;
+        }
 
-.cta-button-black:hover {
-  color: #FFFFF;
-  scale: 1.1;
-  box-shadow: 0 0px 20px rgba(255, 255, 255,0.4);
-}
+        /* From Uiverse.io by gharsh11032000 */
+        .cta-button {
+            margin-top: 2rem;
+            cursor: pointer;
+            position: relative;
+            padding: 10px 24px;
+            font-size: 18px;
+            color: rgb(250, 250, 250);
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 10px;
+            background-color: transparent;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            overflow: hidden;
+        }
 
-.cta-button-black:active {
-  scale: 1;
-}
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            border-radius: inherit;
+            scale: 0;
+            z-index: -1;
+            background-color: rgb(250, 250, 250);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
 
-.modal-overlay {
+        .cta-button:hover::before {
+            scale: 5;
+        }
+
+        .cta-button:hover {
+            color: #212121;
+            scale: 1.1;
+            box-shadow: 0 0px 20px rgba(193, 163, 98, 0.4);
+        }
+
+        .cta-button:active {
+            scale: 1;
+        }
+
+        .cta-button-black {
+            margin-top: 2rem;
+            cursor: pointer;
+            position: relative;
+            padding: 10px 24px;
+            font-size: 18px;
+            color: rgb(0, 0, 0);
+            border: 2px solid rgb(0, 0, 0);
+            border-radius: 10px;
+            background-color: transparent;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            overflow: hidden;
+        }
+
+        .cta-button-black::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            border-radius: inherit;
+            scale: 0;
+            z-index: -1;
+            background-color: rgb(0, 0, 0);
+            transition: all 0.6s cubic-bezier(255, 255, 255, 1);
+        }
+
+        .cta-button-black:hover::before {
+            scale: 5;
+        }
+
+        .cta-button-black:hover {
+            color: #FFFFF;
+            scale: 1.1;
+            box-shadow: 0 0px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .cta-button-black:active {
+            scale: 1;
+        }
+
+        .modal-overlay {
             position: fixed;
             inset: 0;
             background-color: rgba(0, 0, 0, 0.7);
@@ -193,7 +226,9 @@
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
         }
 
-        .modal-box p { text-align: left; }
+        .modal-box p {
+            text-align: left;
+        }
 
         .modal-close {
             position: absolute;
@@ -210,372 +245,414 @@
             color: #000;
         }
 
-[x-cloak] { display: none !important; }
-
-</style>
-<button id="scrollToTopBtn" 
-  class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gray-800 text-white text-xl rounded-full shadow-lg 
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+    <button id="scrollToTopBtn"
+        class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gray-800 text-white text-xl rounded-full shadow-lg 
          opacity-0 pointer-events-none hover:opacity-100 transition-opacity duration-300 
          flex items-center justify-center"
-  aria-label="Scroll to top">
-  ↑
-</button>
-<div class="min-h-full">
-    <nav id="navbar" class="fixed top-0 z-50 w-full transition-all duration-300">
-      <div class="mx-auto max-w-7xl px-1 sm:px-2 lg:px-3">
-        <div class="flex items-center justify-between h-20">
-          <a>
-          </a>
-          <div class="hidden md:flex items-center space-x-4">
-            <x-nav-link href="#gallery" :active="request()->is('gallery')">Galéria</x-nav-link>
-            <x-nav-link href="#contact" :active="request()->is('contact')">Kontakt</x-nav-link>
-            <x-nav-link href="#location" :active="request()->is('location')">Lokalita</x-nav-link>
-            <x-nav-link href="/menu">Objednať</x-nav-link>
-          </div>
-          <div class="md:hidden z-50">
-            <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
-              <span class="sr-only">Open main menu</span>
-              <svg class="block h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-  
-<!-- Mobile menu, show/hide based on menu state. -->
-<div class="md:hidden hidden absolute left-0 w-full top-0 bg-black bg-opacity-80 shadow-lg z-40" id="mobile-menu">
-  <div class="px-4 py-3 divide-y divide-gray-700 space-y-0">
-    <a href="#gallery" class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Galéria</a>
-    <a href="#contact" class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Kontakt</a>
-    <a href="#location" class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Lokalita</a>
-    <a href="/menu" class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Objednať</a>
-  </div>
-</div>
+        aria-label="Scroll to top">
+        ↑
+    </button>
+    <div class="min-h-full">
+        <nav id="navbar" class="fixed top-0 z-50 w-full transition-all duration-300">
+            <div class="mx-auto max-w-7xl px-1 sm:px-2 lg:px-3">
+                <div class="flex items-center justify-between h-20">
+                    <a>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-4">
+                        <x-nav-link href="#gallery" :active="request()->is('gallery')">Galéria</x-nav-link>
+                        <x-nav-link href="#contact" :active="request()->is('contact')">Kontakt</x-nav-link>
+                        <x-nav-link href="#location" :active="request()->is('location')">Lokalita</x-nav-link>
+                        <x-nav-link href="/menu">Objednať</x-nav-link>
+                    </div>
+                    <div class="md:hidden z-50">
+                        <button type="button"
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                            aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu, show/hide based on menu state. -->
+            <div class="md:hidden hidden absolute left-0 w-full top-0 bg-black bg-opacity-80 shadow-lg z-40"
+                id="mobile-menu">
+                <div class="px-4 py-3 divide-y divide-gray-700 space-y-0">
+                    <a href="#gallery"
+                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Galéria</a>
+                    <a href="#contact"
+                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Kontakt</a>
+                    <a href="#location"
+                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Lokalita</a>
+                    <a href="/menu"
+                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Objednať</a>
+                </div>
+            </div>
 
 
-  </nav>
-</div>
-    <div class="h-screen w-full relative bg-cover bg-center" style="background-image: url('imgs/image-from-rawpixel-id-5926993-jpeg.jpg');">
-      <div class="absolute inset-0 bg-black/60"></div>
-    
-      <div class="relative flex flex-col items-center justify-center h-full text-white text-center px-6">
-        <h1 class="text-5xl md:text-6xl font-extrabold font-poppins animate-fade-down">
-          <img src="{{ asset('imgs/loggo.png') }}" alt="..." class="h-14">
-          {{-- <i class="text-red-500">Ciao</i> <i>Bella</i> <i class="text-green-500">Pizzeria</i> --}}
-        </h1>
-        <p id="opening-hours" class="text-xl mt-4 animate-fade-up">Loading...</p>
-        <div class="flex gap-4 mt-8">
-            <a href="/menu" class="cta-button">Objednať</a>
-            <div x-data="{ showModal: false }">
-              <button @click="showModal = true" class="cta-button bg-blue-500 text-white px-4 py-2 rounded">Týždenné menu</button>
-              <!-- Modal Overlay -->
-              <div
-                  x-show="showModal"
-                  x-cloak
-                  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
-                  @keydown.escape.window="showModal = false"
-              >
-                  <!-- Modal Box -->
-                  <div
-                      class="max-w-[120vh] max-h-[90vh] overflow-y-auto rounded-lg relative w-full"
-                      @click.away="showModal = false"
-                  >
-                      <button
-                          @click="showModal = false"
-                          class="absolute top-2 right-2 text-2xl text-gray-400 hover:text-gray-700"
-                      >&times;</button>
-                      <div id="instafeed"></div>
-                  </div>
-              </div>
-          </div>          
-        </div>
-      </div>
-      <img src="imgs/bottom_to_top.png" alt="transition" class="absolute bottom-0 left-0 h-16 w-full z-20 pointer-events-none" />
+        </nav>
     </div>
-    
+    <div class="h-screen w-full relative bg-cover bg-center"
+        style="background-image: url('imgs/image-from-rawpixel-id-5926993-jpeg.jpg');">
+        <div class="absolute inset-0 bg-black/60"></div>
+
+        <div class="relative flex flex-col items-center justify-center h-full text-white text-center px-6">
+            <h1 class="text-5xl md:text-6xl font-extrabold font-poppins animate-fade-down">
+                <img src="{{ asset('imgs/loggo.png') }}" alt="..." class="h-14">
+                {{-- <i class="text-red-500">Ciao</i> <i>Bella</i> <i class="text-green-500">Pizzeria</i> --}}
+            </h1>
+            <p id="opening-hours" class="text-xl mt-4 animate-fade-up">Loading...</p>
+            <div class="flex gap-4 mt-8">
+                <a href="/menu" class="cta-button">Objednať</a>
+                <div x-data="{ showModal: false }">
+                    <button @click="showModal = true"
+                        class="cta-button bg-blue-500 text-white px-4 py-2 rounded">Týždenné menu</button>
+                    <!-- Modal Overlay -->
+                    <div x-show="showModal" x-cloak
+                        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
+                        @keydown.escape.window="showModal = false">
+                        <!-- Modal Box -->
+                        <div class="max-w-[120vh] max-h-[90vh] overflow-y-auto rounded-lg relative w-full"
+                            @click.away="showModal = false">
+                            <button @click="showModal = false"
+                                class="absolute top-2 right-2 text-2xl text-gray-400 hover:text-gray-700">&times;</button>
+                            <div id="instafeed"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="imgs/bottom_to_top.png" alt="transition"
+            class="absolute bottom-0 left-0 h-16 w-full z-20 pointer-events-none" />
+    </div>
+
 
     <div class="w-full bg-white text-gray-800 overflow-hidden py-16">
-      <!-- MOBILE ONLY: Carousel version -->
-      <div class="block md:hidden">
-        <div class="text-center font-poppins space-y-6 px-6">
-          <h3 class="text-4xl font-bold text-gray-600">Naša ponuka</h3>
-          <hr class="border-t border-gray-300 w-1/2 mx-auto my-6" />
+        <!-- MOBILE ONLY: Carousel version -->
+        <div class="block md:hidden">
+            <div class="text-center font-poppins space-y-6 px-6">
+                <h3 class="text-4xl font-bold text-gray-600">Naša ponuka</h3>
+                <hr class="border-t border-gray-300 w-1/2 mx-auto my-6" />
+            </div>
+
+            <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                <div class="relative h-96 overflow-hidden md:h-96">
+                    <!-- Item 1 (active) -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+                        <img src="imgs/pizzain.png" class="block w-full h-full object-cover"
+                            alt="...">
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="imgs/burger.png" class="block w-full h-full object-cover"
+                            alt="...">
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="imgs/pasta.png" class="block w-full h-full object-cover"
+                            alt="...">
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="imgs/pizzaout.png" class="block w-full h-full object-cover"
+                            alt="...">
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="imgs/kitchen.png" class="block w-full h-full object-cover"
+                            alt="...">
+                    </div>
+                </div>
+                <!-- Slider indicators -->
+                <div class="absolute z-30 flex w-full justify-center bottom-5 space-x-3 rtl:space-x-reverse">
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
+                        data-carousel-slide-to="0"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
+                        data-carousel-slide-to="1"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
+                        data-carousel-slide-to="2"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
+                        data-carousel-slide-to="3"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5"
+                        data-carousel-slide-to="4"></button>
+                </div>
+
+                <!-- Slider controls -->
+                <button type="button"
+                    class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    data-carousel-prev>
+                    <span
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M5 1 1 5l4 4" />
+                        </svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button"
+                    class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    data-carousel-next>
+                    <span
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 9 4-4-4-4" />
+                        </svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
+            </div>
         </div>
-      
-        <div id="default-carousel" class="relative w-full" data-carousel="slide">
-          <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-            <!-- Item 1 (active) -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-              <img src="imgs/Screenshot 2025-05-03 at 13.41.51.png" class="block w-full h-full object-cover" alt="...">
-            </div>
-            <!-- Item 2 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="imgs/Screenshot 2025-05-03 at 13.37.39.png" class="block w-full h-full object-cover" alt="...">
-            </div>
-            <!-- Item 3 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="imgs/Screenshot 2025-05-03 at 13.44.45.png" class="block w-full h-full object-cover" alt="...">
-            </div>
-            <!-- Item 4 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="imgs/Screenshot 2025-05-03 at 13.37.39.png" class="block w-full h-full object-cover" alt="...">
-            </div>
-            <!-- Item 5 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="imgs/Screenshot 2025-05-03 at 13.44.45.png" class="block w-full h-full object-cover" alt="...">
-            </div>
-          </div>
-          <!-- Slider indicators -->
-          <div class="absolute z-30 flex w-full justify-center bottom-5 space-x-3 rtl:space-x-reverse">
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-          </div>
-          
-          <!-- Slider controls -->
-          <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-              <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-              </svg>
-              <span class="sr-only">Previous</span>
-            </span>
-          </button>
-          <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-              <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-              </svg>
-              <span class="sr-only">Next</span>
-            </span>
-          </button>
-        </div>
-      </div>
     </div>
     <div class="hidden md:flex max-w-7xl mx-auto px-6 md:space-x-12 items-center">
-      <!-- Left: Headline & Text -->
-      <div class="w-1/2 space-y-6">
-        <h3 class="text-4xl font-bold text-gray-600 font-poppins">Naša ponuka</h3>
-        <p class="text-lg leading-relaxed">
-          Talianska kuchyňa je oslavou jednoduchosti a kvality surovín. Naša ponuka zahŕňa čerstvé cestoviny, autentické pizze pečené v peci, delikátne rizotá a bohaté talianske predjedlá. Nechýbajú ani klasické dezerty ako tiramisu a panna cotta. Každé jedlo je pripravené s dôrazom na chuť a tradičné talianske recepty, aby sme vám priniesli skutočný zážitok zo Stredomoria.
-        </p>
-      {{-- <a href="/ponuka.pdf" class="cta-button-black">Týždenné menu</a> --}}
-      </div>
-      <!-- Right: Static image preview (e.g., 1–2 representative images) -->
-      <div class="w-1/2 grid grid-cols-2 gap-4">
-        <a href="imgs/Screenshot 2025-05-03 at 13.37.39.png" data-lightbox="gallery" data-title="Dish 1">
-          <img src="imgs/Screenshot 2025-05-03 at 13.37.39.png" class="rounded-lg shadow object-cover h-48 w-full transform rotate-3 translate-x-2 translate-y-3" alt="Italian dish">
-        </a>
-        <a href="imgs/Screenshot 2025-05-03 at 13.41.51.png" data-lightbox="gallery" data-title="Dish 2">
-          <img src="imgs/Screenshot 2025-05-03 at 13.41.51.png" class="rounded-lg shadow object-cover h-52 w-full transform -rotate-2 translate-x-4 translate-y-2" alt="Italian dish">
-        </a>
-        <a href="imgs/Screenshot 2025-05-03 at 13.44.45.png" data-lightbox="gallery" data-title="Dish 3">
-          <img src="imgs/Screenshot 2025-05-03 at 13.44.45.png" class="rounded-lg shadow object-cover h-44 w-full transform rotate-5 translate-x-3 translate-y-1" alt="Italian dish">
-        </a>
-        <a href="imgs/Screenshot 2025-05-03 at 13.44.45.png" data-lightbox="gallery" data-title="Dish 4">
-          <img src="imgs/vine.jpg" class="rounded-lg shadow object-cover h-50 w-full transform -rotate-3 translate-x-1 translate-y-4" alt="Italian dish">
-        </a>
-      </div>
-      
-      
-    </div>
-
-<div class="text-center font-poppins space-y-6 px-6 mt-10">
-  <hr class="border-t border-gray-300 w-1/2 mx-auto my-6" />
-</div>
-<section class="relative w-full overflow-hidden">
-
-  <!-- Background Image -->
-  <div class="absolute inset-0 bg-cover bg-center z-0"
-       style="background-image: url('{{ asset('imgs/image-from-rawpixel-id-5926993-jpeg.jpg') }}');">
-  </div>
-
-  
-  <!-- Dark Overlay -->
-
-  <div class="absolute inset-0 bg-black bg-opacity-80 z-10"></div>
-  <img src="imgs/top_to_bottom.png" alt="transition" class="absolute top-0 left-0 h-16 w-full z-20 pointer-events-none" />
-  <img src="imgs/bottom_to_top.png" alt="transition" class="absolute bottom-0 left-0 h-16 w-full z-20 pointer-events-none" />
-  <div class="font-poppins text-xl relative flex flex-col items-center mt-20 justify-center h-full text-white text-3xl font-bold space-y-4 z-40">
-      <div class="max-w-6xl mx-auto px-6 text-center font-poppins">
-        <h2 class="text-4xl font-extrabold mb-8">Služby</h2>
-        <hr class="border-t border-gray-300 w-24 mx-auto mb-12" />
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20">
-          <!-- Kuchyňa -->
-          <div class="flex flex-col items-center">
-            <h3 class="text-2xl font-semibold mb-4">Kuchyňa</h3>
-            <img src="imgs/kitchen.jpg" alt="Kuchyňa" class="h-40 w-48  object-cover mb-4 shadow-lg" />
-            <p class="text-base leading-relaxed text-justify">Naša kuchyňa dotvára dokonalý zážitok. Moderná gastronómia s nádychom talianských chutí, inšpirovaná tajomstvom nášho šéfkuchára. Kvalitné suroviny, chrumkavé jedlá a precízna príprava sú pre nás samozrejmosťou. Každé jedlo je malým gurmánskym potešením.</p>
-          </div>
-          <!-- Bar -->
-          <div class="flex flex-col items-center">
-            <h3 class="text-2xl font-semibold mb-4">Bar</h3>
-            <img src="imgs/bar.heic" alt="Bar" class="h-40 w-48 object-cover mb-4 shadow-lg" />
-            <p class="text-base leading-relaxed text-justify">Bar je miestom, kde sa chute stretávajú s atmosférou. Ponúkame výber kvalitných vín, originálnych miešaných drinkov aj obľúbených klasík. Či už si prídete vychutnať drink po práci alebo osláviť výnimočný večer, náš bar vás nesklame.</p>
-          </div>
-          <!-- Rozvoz -->
-          <div class="flex flex-col items-center">
-            <h3 class="text-2xl font-semibold mb-4">Rozvoz</h3>
-            <img src="imgs/delivery.JPG" alt="Rozvoz" class="h-40 w-48 object-cover mb-4 shadow-lg" />
-            <p class="text-base leading-relaxed text-justify">Nemáte čas prísť osobne? Nevadí. Naše jedlá vám privezieme až ku dverám – čerstvé, horúce a chutné, akoby ste sedeli priamo v reštaurácii. Rýchly a spoľahlivý rozvoz je súčasťou nášho záväzku voči vašej spokojnosti.</p>
-          </div>
+        <!-- Left: Headline & Text -->
+        <div class="w-1/2 space-y-6">
+            <h3 class="text-4xl font-bold text-gray-600 font-poppins">Naša ponuka</h3>
+            <p class="text-lg leading-relaxed">
+                Talianska kuchyňa je oslavou jednoduchosti a kvality surovín. Naša ponuka zahŕňa čerstvé cestoviny,
+                autentické pizze pečené v peci, delikátne rizotá a bohaté talianske predjedlá. Nechýbajú ani klasické
+                dezerty ako tiramisu a panna cotta. Každé jedlo je pripravené s dôrazom na chuť a tradičné talianske
+                recepty, aby sme vám priniesli skutočný zážitok zo Stredomoria.
+            </p>
+            {{-- <a href="/ponuka.pdf" class="cta-button-black">Týždenné menu</a> --}}
         </div>
-      </div>
-  </div>
-</section>
-</div>
-<section id="gallery">
-  <div class="flex flex-col items-center justify-center min-h-screen bg-white px-4 space-y-6">
-    <div class="w-full max-w-full overflow-hidden flex justify-between gap-4 flex-wrap">
-      
-      <!-- Left iframe: hidden on mobile -->
-      <iframe src="https://www.instagram.com/p/C0B0L2PoxqR/embed"
-              width="100%" height="480" frameborder="0" scrolling="no"
-              allowtransparency="true"
-              class="hidden md:flex flex-1 max-w-[calc(33.33%-1rem)] rounded-md shadow-md"></iframe>
-
-      <!-- Middle iframe: full width on mobile, one-third on md+ -->
-      <iframe src="https://www.instagram.com/p/DJKNSCDNTjB/embed"
-              width="100%" height="480" frameborder="0" scrolling="no"
-              allowtransparency="true"
-              class="w-full md:flex-1 md:max-w-[calc(33.33%-1rem)] rounded-md shadow-md"></iframe>
-
-      <!-- Right iframe: hidden on mobile -->
-      <iframe src="https://www.instagram.com/p/ClYziz3oFLV/embed"
-              width="100%" height="480" frameborder="0" scrolling="no"
-              allowtransparency="true"
-              class="hidden md:flex flex-1 max-w-[calc(33.33%-1rem)] rounded-md shadow-md"></iframe>
-
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="w-full flex items-center justify-center bg-black text-gray-100 relative">
-    <img src="imgs/top_to_bottom.png" alt="transition" class="absolute top-0 left-0 h-16 w-full z-20 pointer-events-none" />
-  <div class="font-poppins text-xl relative flex flex-col items-center justify-center h-full text-white text-3xl font-bold space-y-4 z-40 mt-20 mb-20">
-      <!-- Otváracie hodiny -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10 mb-10">
-        <div class="flex flex-col items-center">
-          <h1 class="text-4xl font-extrabold">Otváracie hodiny</h1>
-          <hr class="border-t border-gray-300 w-full max-w-[300px] my-4" />
-          <div class="flex flex-col w-full max-w-xs space-y-2 text-left text-lg font-light">
-            <div class="flex justify-between w-full">
-              <p>Pondelok</p><p>10:00 – 22:00</p>
-            </div>
-            <div class="flex justify-between w-full">
-              <p>Utorok</p><p>10:00 – 22:00</p>
-            </div>
-            <div class="flex justify-between w-full">
-              <p>Streda</p><p>10:00 – 22:00</p>
-            </div>
-            <div class="flex justify-between w-full">
-              <p>Štvrtok</p><p>10:00 – 22:00</p>
-            </div>
-            <div class="flex justify-between w-full">
-              <p>Piatok</p><p>10:00 – 22:00</p>
-            </div>
-            <div class="flex justify-between w-full">
-              <p>Sobota</p><p>10:00 – 22:00</p>
-            </div>
-            <div class="flex justify-between w-full">
-              <p>Nedeľa</p><p>10:00 – 22:00</p>
-            </div>
-          </div>
-        </div>
-  
-<!-- Kontakt -->
-<div class="flex flex-col items-center">
-  <h1 class="text-4xl font-extrabold">Kontakt</h1>
-  <hr class="border-t border-gray-300 w-full max-w-[280px] my-4" />
-  <div class="pl-10 flex flex-col space-y-6 mt-4">
-    <!-- Row 1 -->
-    <div class="flex">
-      <div class="w-8 flex justify-center">
-        <i class="material-icons text-2xl">location_on</i>
-      </div>
-      <div class="ml-4 text-left text-gray-400 text-lg font-light leading-snug">
-        Ul. 1. mája 899/23<br>02001 Púchov<br>Slovensko
-      </div>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="flex">
-      <div class="w-8 flex justify-center">
-        <i class="material-icons text-2xl">email</i>
-      </div>
-      <a href="mailto:veron.micietova@gmail.com" class="ml-4 text-gray-400 text-lg font-light hover:text-gray-700">
-        veron.micietova@gmail.com
-      </a>
-    </div>
-
-    <!-- Row 3 -->
-    <div class="flex">
-      <div class="w-8 flex justify-center">
-        <i class="material-icons text-2xl">call</i>
-      </div>
-      <a href="tel:0949464033" class="ml-4 text-gray-400 text-lg font-light hover:text-gray-700">
-        0949 464033
-      </a>
-    </div>
-  </div>
-</div>
-      <!-- Sociálne siete -->
-        <div class="flex flex-col items-center">
-          <h1 class="text-4xl font-extrabold">Sociálne siete</h1>
-          <hr class="border-t border-gray-300 w-full max-w-[250px] my-4" />
-          <div class="flex gap-8">
-            <a href="https://www.instagram.com/ciao__bella_pizza/" target="_blank">
-              <img src="{{ asset('imgs/instagram_icon_white.png') }}" alt="Instagram" class="w-14 h-14">
+        <!-- Right: Static image preview (e.g., 1–2 representative images) -->
+        <div class="w-1/2 grid grid-cols-2 gap-4">
+            <a data-lightbox="gallery" data-title="Dish 1">
+                <img src="imgs/pizzain.png"
+                    class="rounded-lg shadow object-cover h-48 w-full transform rotate-1 translate-x-2 translate-y-3"
+                    alt="Italian dish">
             </a>
-            <a href="https://www.facebook.com/profile.php?id=100085650819146" target="_blank">
-              <img src="{{ asset('imgs/facebook_icon_white.png') }}" alt="Facebook" class="w-14 h-14">
+            <a data-lightbox="gallery" data-title="Dish 2">
+                <img src="imgs/burger.png"
+                    class="rounded-lg shadow object-cover h-52 w-full transform -rotate-1 translate-x-4 translate-y-2"
+                    alt="Italian dish">
             </a>
-          </div>
+            <a data-lightbox="gallery" data-title="Dish 3">
+                <img src="imgs/pasta.png"
+                    class="rounded-lg shadow object-cover h-44 w-full transform rotate-1 translate-x-3 translate-y-1"
+                    alt="Italian dish">
+            </a>
+            <a data-lightbox="gallery" data-title="Dish 4">
+                <img src="imgs/pizzaout.png"
+                    class="rounded-lg shadow object-cover h-50 w-full transform -rotate-1 translate-x-3 translate-y-1"
+                    alt="Italian dish">
+            </a>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section id="location">
-    <div class="h-screen w-full flex items-center justify-center bg-gray-700 text-gray-800 text-3xl font-bold">
-      <div class="h-screen w-full">
-          <iframe class="w-full h-full" 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2611.2894938723816!2d18.31893067615508!3d49.11913687136872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f50.0!3m3!1m2!1s0x47148f57a7f8911f%3A0x56b8edd0984ab40b!2sUl.%201.%20m%C3%A1ja%20899%2F23%2C%20020%2001%20P%C3%BAchov!5e0!3m2!1sen!2ssk!4v1742150244525!5m2!1sen!2ssk"
-              style="border:0;" allowfullscreen="" loading="lazy">
-          </iframe>
-      </div>
-    </div>
-</div>
-</section>
 
-<footer class="bg-black text-gray-200 py-8">
-    <div class="mt-2 text-center text-xs text-gray-500">
-      &copy; 2025 Ciao Bella. Všetky práva vyhradené.
-    </div>
-  </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+    </div>
+
+    <div class="text-center font-poppins space-y-6 px-6 mt-10">
+        <hr class="border-t border-gray-300 w-1/2 mx-auto my-6" />
+    </div>
+    <section class="relative w-full overflow-hidden">
+
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-cover bg-center z-0"
+            style="background-image: url('{{ asset('imgs/image-from-rawpixel-id-5926993-jpeg.jpg') }}');">
+        </div>
+
+
+        <!-- Dark Overlay -->
+
+        <div class="absolute inset-0 bg-black bg-opacity-80 z-10"></div>
+        <img src="imgs/top_to_bottom.png" alt="transition"
+            class="absolute top-0 left-0 h-16 w-full z-20 pointer-events-none" />
+        <img src="imgs/bottom_to_top.png" alt="transition"
+            class="absolute bottom-0 left-0 h-16 w-full z-20 pointer-events-none" />
+        <div
+            class="font-poppins text-xl relative flex flex-col items-center mt-20 justify-center h-full text-white text-3xl font-bold space-y-4 z-40">
+            <div class="max-w-6xl mx-auto px-6 text-center font-poppins">
+                <h2 class="text-4xl font-extrabold mb-8">Služby</h2>
+                <hr class="border-t border-gray-300 w-24 mx-auto mb-12" />
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-24 mb-20">
+                    <!-- Kuchyňa -->
+                    <div class="flex flex-col items-center">
+                        <h3 class="text-2xl font-semibold mb-4">Kuchyňa</h3>
+                        <img src="imgs/kitchen.png" alt="Kuchyňa" class="h-40 w-64 object-cover mb-4 shadow-lg" />
+                        <p class="text-base leading-relaxed text-justify">Naša kuchyňa dotvára dokonalý zážitok.
+                            Moderná gastronómia s nádychom talianských chutí, inšpirovaná tajomstvom nášho šéfkuchára.
+                            Kvalitné suroviny, chrumkavé jedlá a precízna príprava sú pre nás samozrejmosťou. Každé
+                            jedlo je malým gurmánskym potešením.</p>
+                    </div>
+                    <!-- Bar -->
+                    <div class="flex flex-col items-center">
+                        <h3 class="text-2xl font-semibold mb-4">Bar</h3>
+                        <img src="imgs/bar.heic" alt="Bar" class="h-40 w-64 object-cover mb-4 shadow-lg" />
+                        <p class="text-base leading-relaxed text-justify">Bar je miestom, kde sa chute stretávajú s
+                            atmosférou. Ponúkame výber kvalitných vín, originálnych miešaných drinkov aj obľúbených
+                            klasík. Či už si prídete vychutnať drink po práci alebo osláviť výnimočný večer, náš bar vás
+                            nesklame.</p>
+                    </div>
+                    <!-- Rozvoz -->
+                    <div class="flex flex-col items-center">
+                        <h3 class="text-2xl font-semibold mb-4">Rozvoz</h3>
+                        <img src="imgs/delivery.png" alt="Rozvoz" class="h-40 w-64 object-cover mb-4 shadow-lg" />
+                        <p class="text-base leading-relaxed text-justify">Nemáte čas prísť osobne? Nevadí. Naše jedlá
+                            vám privezieme až ku dverám – čerstvé, horúce a chutné, akoby ste sedeli priamo v
+                            reštaurácii. Rýchly a spoľahlivý rozvoz je súčasťou nášho záväzku voči vašej spokojnosti.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+    <section id="gallery">
+        <div class="flex flex-col items-center justify-center min-h-screen bg-white px-20">
+                    <script src="https://elfsightcdn.com/platform.js" async></script>
+                    <div class="elfsight-app-a12848b1-2d59-4099-9694-cdd694ccecfc" data-elfsight-app-lazy></div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="w-full flex items-center justify-center bg-black text-gray-100 relative">
+            <img src="imgs/top_to_bottom.png" alt="transition"
+                class="absolute top-0 left-0 h-16 w-full z-20 pointer-events-none" />
+            <div
+                class="font-poppins text-xl relative flex flex-col items-center justify-center h-full text-white text-3xl font-bold space-y-4 z-40 mt-20 mb-20">
+                <!-- Otváracie hodiny -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10 mb-10">
+                    <div class="flex flex-col items-center">
+                        <h1 class="text-4xl font-extrabold">Otváracie hodiny</h1>
+                        <hr class="border-t border-gray-300 w-full max-w-[300px] my-4" />
+                        <div class="flex flex-col w-full max-w-xs space-y-2 text-left text-lg font-light">
+                            <div class="flex justify-between w-full">
+                                <p>Pondelok</p>
+                                <p>10:00 – 22:00</p>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <p>Utorok</p>
+                                <p>10:00 – 22:00</p>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <p>Streda</p>
+                                <p>10:00 – 22:00</p>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <p>Štvrtok</p>
+                                <p>10:00 – 22:00</p>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <p>Piatok</p>
+                                <p>10:00 – 22:00</p>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <p>Sobota</p>
+                                <p>10:00 – 22:00</p>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <p>Nedeľa</p>
+                                <p>10:00 – 22:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kontakt -->
+                    <div class="flex flex-col items-center">
+                        <h1 class="text-4xl font-extrabold">Kontakt</h1>
+                        <hr class="border-t border-gray-300 w-full max-w-[280px] my-4" />
+                        <div class="pl-10 flex flex-col space-y-6 mt-4">
+                            <!-- Row 1 -->
+                            <div class="flex">
+                                <div class="w-8 flex justify-center">
+                                    <i class="material-icons text-2xl">location_on</i>
+                                </div>
+                                <div class="ml-4 text-left text-gray-400 text-lg font-light leading-snug">
+                                    Ul. 1. mája 899/23<br>02001 Púchov<br>Slovensko
+                                </div>
+                            </div>
+
+                            <!-- Row 2 -->
+                            <div class="flex">
+                                <div class="w-8 flex justify-center">
+                                    <i class="material-icons text-2xl">email</i>
+                                </div>
+                                <a href="mailto:veron.micietova@gmail.com"
+                                    class="ml-4 text-gray-400 text-lg font-light hover:text-gray-700">
+                                    veron.micietova@gmail.com
+                                </a>
+                            </div>
+
+                            <!-- Row 3 -->
+                            <div class="flex">
+                                <div class="w-8 flex justify-center">
+                                    <i class="material-icons text-2xl">call</i>
+                                </div>
+                                <a href="tel:0949464033"
+                                    class="ml-4 text-gray-400 text-lg font-light hover:text-gray-700">
+                                    0949 464 033
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sociálne siete -->
+                    <div class="flex flex-col items-center">
+                        <h1 class="text-4xl font-extrabold">Sociálne siete</h1>
+                        <hr class="border-t border-gray-300 w-full max-w-[250px] my-4" />
+                        <div class="flex gap-8">
+                            <a href="https://www.instagram.com/ciao__bella_pizza/" target="_blank">
+                                <img src="{{ asset('imgs/instagram_icon_white.png') }}" alt="Instagram"
+                                    class="w-14 h-14">
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=100085650819146" target="_blank">
+                                <img src="{{ asset('imgs/facebook_icon_white.png') }}" alt="Facebook"
+                                    class="w-14 h-14">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="location">
+        <div class="h-screen w-full flex items-center justify-center bg-gray-700 text-gray-800 text-3xl font-bold">
+            <div class="h-screen w-full">
+                <iframe class="w-full h-full"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2611.2894938723816!2d18.31893067615508!3d49.11913687136872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f50.0!3m3!1m2!1s0x47148f57a7f8911f%3A0x56b8edd0984ab40b!2sUl.%201.%20m%C3%A1ja%20899%2F23%2C%20020%2001%20P%C3%BAchov!5e0!3m2!1sen!2ssk!4v1742150244525!5m2!1sen!2ssk"
+                    style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-gray-200 py-8">
+        <div class="mt-2 text-center text-xs text-gray-500">
+            &copy; 2025 Ciao Bella. Všetky práva vyhradené.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
 </body>
 
 <script>
-
     window.InstaConfig = @json($ig_config);
 
-    window.addEventListener("scroll", function () {
-      const navbar = document.getElementById("navbar");
-      if (window.scrollY > 500) {
-        navbar.classList.add("bg-black", "bg-opacity-80", "backdrop-blur", "shadow-lg");
-      } else {
-        navbar.classList.remove("bg-black", "bg-opacity-80", "backdrop-blur", "shadow-lg");
-      }
+    window.addEventListener("scroll", function() {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 500) {
+            navbar.classList.add("bg-black", "bg-opacity-80", "backdrop-blur", "shadow-lg");
+        } else {
+            navbar.classList.remove("bg-black", "bg-opacity-80", "backdrop-blur", "shadow-lg");
+        }
     });
-  
+
     function updateOpeningHours() {
-        
+
         const currentDate = new Date();
         const hours = currentDate.getHours();
 
@@ -588,29 +665,32 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggleButton = document.querySelector('[aria-controls="mobile-menu"]');
-      const mobileMenu = document.getElementById("mobile-menu");
+    document.addEventListener("DOMContentLoaded", function() {
+        const toggleButton = document.querySelector('[aria-controls="mobile-menu"]');
+        const mobileMenu = document.getElementById("mobile-menu");
 
-      toggleButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-      });
+        toggleButton.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
     });
 
     const scrollBtn = document.getElementById("scrollToTopBtn");
 
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        scrollBtn.classList.add("opacity-60");
-        scrollBtn.classList.remove("opacity-0", "pointer-events-none");
-      } else {
-        scrollBtn.classList.add("opacity-0", "pointer-events-none");
-        scrollBtn.classList.remove("opacity-60");
-      }
+        if (window.scrollY > 300) {
+            scrollBtn.classList.add("opacity-60");
+            scrollBtn.classList.remove("opacity-0", "pointer-events-none");
+        } else {
+            scrollBtn.classList.add("opacity-0", "pointer-events-none");
+            scrollBtn.classList.remove("opacity-60");
+        }
     });
 
     scrollBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     });
 
     updateOpeningHours();
