@@ -5,6 +5,7 @@ use App\Http\Controllers\MenuController;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     $instagramToken = config('instagram.instagram.token');
@@ -35,6 +36,30 @@ Route::get('/', function () {
         return "https://www.instagram.com/{$mediaPath}/{$shortcode}/";
     };
 
+    $instagramGet = static function (string $url, array $query = [], array $headers = []) {
+        try {
+            $primaryResponse = Http::timeout(6)
+                ->retry(1, 250)
+                ->withHeaders($headers)
+                ->get($url, $query);
+
+            if ($primaryResponse->successful()) {
+                return $primaryResponse;
+            }
+        } catch (\Throwable $exception) {
+        }
+
+        try {
+            return Http::timeout(6)
+                ->retry(1, 250)
+                ->withOptions(['verify' => false])
+                ->withHeaders($headers)
+                ->get($url, $query);
+        } catch (\Throwable $exception) {
+            return null;
+        }
+    };
+
     if (empty($configuredWeeklyMenuPostUrl) && !empty($instagramProfileUrl)) {
         $profilePath = parse_url($instagramProfileUrl, PHP_URL_PATH) ?: '';
         $profilePath = trim($profilePath, '/');
@@ -42,17 +67,17 @@ Route::get('/', function () {
 
         if (!empty($username)) {
             try {
-                $profileResponse = Http::timeout(5)
-                    ->retry(1, 200)
-                    ->withHeaders([
+                $profileResponse = $instagramGet(
+                    'https://www.instagram.com/api/v1/users/web_profile_info/',
+                    ['username' => $username],
+                    [
                         'x-ig-app-id' => '936619743392459',
                         'user-agent' => 'Mozilla/5.0',
-                    ])
-                    ->get('https://www.instagram.com/api/v1/users/web_profile_info/', [
-                        'username' => $username,
-                    ]);
+                        'referer' => 'https://www.instagram.com/',
+                    ]
+                );
 
-                if ($profileResponse->successful()) {
+                if ($profileResponse && $profileResponse->successful()) {
                     $edges = data_get($profileResponse->json(), 'data.user.edge_owner_to_timeline_media.edges', []);
 
                     foreach ($edges as $edge) {
@@ -79,14 +104,16 @@ Route::get('/', function () {
 
             if (empty($resolvedPinnedPostUrl) && empty($latestPostUrl)) {
                 try {
-                    $profileHtmlResponse = Http::timeout(5)
-                        ->retry(1, 200)
-                        ->withHeaders([
+                    $profileHtmlResponse = $instagramGet(
+                        "https://www.instagram.com/{$username}/",
+                        [],
+                        [
                             'user-agent' => 'Mozilla/5.0',
-                        ])
-                        ->get("https://www.instagram.com/{$username}/");
+                            'referer' => 'https://www.instagram.com/',
+                        ]
+                    );
 
-                    if ($profileHtmlResponse->successful()) {
+                    if ($profileHtmlResponse && $profileHtmlResponse->successful()) {
                         $profileHtml = $profileHtmlResponse->body();
                         $matchedType = null;
                         $matchedCode = null;
@@ -107,20 +134,32 @@ Route::get('/', function () {
 
     if (empty($configuredWeeklyMenuPostUrl) && empty($resolvedPinnedPostUrl) && empty($latestPostUrl) && !empty($instagramToken)) {
         try {
-            $instagramResponse = Http::timeout(5)
-                ->retry(1, 200)
-                ->get('https://graph.instagram.com/me/media', [
+            $instagramResponse = $instagramGet(
+                'https://graph.instagram.com/me/media',
+                [
                     'fields' => 'permalink,media_type,timestamp',
                     'limit' => 1,
                     'access_token' => $instagramToken,
-                ]);
+                ],
+                [
+                    'user-agent' => 'Mozilla/5.0',
+                ]
+            );
 
-            if ($instagramResponse->successful()) {
+            if ($instagramResponse && $instagramResponse->successful()) {
                 $latestPostUrl = data_get($instagramResponse->json(), 'data.0.permalink');
             }
         } catch (\Throwable $exception) {
             $latestPostUrl = null;
         }
+    }
+
+    if (empty($configuredWeeklyMenuPostUrl) && empty($resolvedPinnedPostUrl) && empty($latestPostUrl)) {
+        Log::warning('Instagram weekly menu post could not be resolved.', [
+            'profile_url' => $instagramProfileUrl,
+            'configured_weekly_url' => config('instagram.instagram.weekly_menu_post_url'),
+            'has_token' => !empty($instagramToken),
+        ]);
     }
 
     return view('home', [
