@@ -453,7 +453,7 @@
             {{-- <a href="/ponuka.pdf" class="cta-button-black">Týždenné menu</a> --}}
         </div>
         <!-- Right: Static image preview (e.g., 1–2 representative images) -->
-        <div class="w-1/2 grid grid-cols-2 gap-4">
+        <div class="w-1/2 grid grid-cols-2 gap-4 mb-12">
             <a data-lightbox="gallery" data-title="Dish 1">
                 <img src="imgs/pizzain.png"
                     class="rounded-lg shadow object-cover h-48 w-full transform rotate-1 translate-x-2 translate-y-3"
@@ -479,9 +479,6 @@
 
     </div>
 
-    <div class="text-center font-poppins space-y-6 px-6 mt-10">
-        <hr class="border-t border-gray-300 w-1/2 mx-auto my-6" />
-    </div>
     <section class="relative w-full overflow-hidden">
 
         <!-- Background Image -->
@@ -524,7 +521,7 @@
                     <!-- Rozvoz -->
                     <div class="flex flex-col items-center">
                         <h3 class="text-2xl font-semibold mb-4">Rozvoz</h3>
-                        <img src="imgs/delivery.png" alt="Rozvoz" class="h-40 w-64 object-cover mb-4 shadow-lg" />
+                        <img src="imgs/delivery_pack.png" alt="Rozvoz" class="h-40 w-64 object-cover mb-4 shadow-lg" />
                         <p class="text-base leading-relaxed text-justify">Nemáte čas prísť osobne? Nevadí. Naše jedlá
                             vám privezieme až ku dverám – čerstvé, horúce a chutné, akoby ste sedeli priamo v
                             reštaurácii. Rýchly a spoľahlivý rozvoz je súčasťou nášho záväzku voči vašej spokojnosti.
@@ -553,32 +550,32 @@
                     <div class="flex flex-col items-center">
                         <h1 class="text-4xl font-extrabold">Otváracie hodiny</h1>
                         <hr class="border-t border-gray-300 w-full max-w-[300px] my-4" />
-                        <div class="flex flex-col w-full max-w-xs space-y-2 text-left text-lg font-light">
-                            <div class="flex justify-between w-full">
+                        <div class="grid w-full max-w-xs gap-y-4 text-left text-lg font-light">
+                            <div class="flex justify-between w-full leading-tight">
                                 <p>Pondelok</p>
                                 <p>10:00 – 22:00</p>
                             </div>
-                            <div class="flex justify-between w-full">
+                            <div class="flex justify-between w-full leading-tight">
                                 <p>Utorok</p>
                                 <p>10:00 – 22:00</p>
                             </div>
-                            <div class="flex justify-between w-full">
+                            <div class="flex justify-between w-full leading-tight">
                                 <p>Streda</p>
                                 <p>10:00 – 22:00</p>
                             </div>
-                            <div class="flex justify-between w-full">
+                            <div class="flex justify-between w-full leading-tight">
                                 <p>Štvrtok</p>
                                 <p>10:00 – 22:00</p>
                             </div>
-                            <div class="flex justify-between w-full">
+                            <div class="flex justify-between w-full leading-tight">
                                 <p>Piatok</p>
                                 <p>10:00 – 22:00</p>
                             </div>
-                            <div class="flex justify-between w-full">
+                            <div class="flex justify-between w-full leading-tight">
                                 <p>Sobota</p>
                                 <p>10:00 – 22:00</p>
                             </div>
-                            <div class="flex justify-between w-full">
+                            <div class="flex justify-between w-full leading-tight">
                                 <p>Nedeľa</p>
                                 <p>10:00 – 22:00</p>
                             </div>
