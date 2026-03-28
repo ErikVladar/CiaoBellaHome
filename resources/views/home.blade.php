@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <title>Ciao Bella</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -317,7 +319,14 @@
                     x-effect="document.documentElement.classList.toggle('overflow-hidden', showModal)">
                     @php
                         $weeklyMenuEmbedUrl = null;
-                        if (!empty($weekly_menu_post_url) && preg_match('~instagram\\.com/(p|reel|tv)/([A-Za-z0-9_-]{5,})/?~i', $weekly_menu_post_url, $instagramMatch)) {
+                        if (
+                            !empty($weekly_menu_post_url) &&
+                            preg_match(
+                                '~instagram\\.com/(p|reel|tv)/([A-Za-z0-9_-]{5,})/?~i',
+                                $weekly_menu_post_url,
+                                $instagramMatch,
+                            )
+                        ) {
                             $weeklyMenuEmbedUrl = "https://www.instagram.com/{$instagramMatch[1]}/{$instagramMatch[2]}/embed";
                         }
                     @endphp
@@ -335,17 +344,13 @@
                             @click.away="showModal = false">
                             <div class="flex-1 overflow-hidden">
 
-                                @if($weeklyMenuEmbedUrl)
-                                    <iframe
-                                        src="{{ $weeklyMenuEmbedUrl }}"
-                                        class="w-full h-full border border-gray-200 rounded"
-                                        allowtransparency="true"
-                                        allowfullscreen
-                                        loading="lazy"
-                                        title="Instagram týždenné menu"
-                                    ></iframe>
+                                @if ($weeklyMenuEmbedUrl)
+                                    <iframe src="{{ $weeklyMenuEmbedUrl }}"
+                                        class="w-full h-full border border-gray-200 rounded" allowtransparency="true"
+                                        allowfullscreen loading="lazy" title="Instagram týždenné menu"></iframe>
                                 @else
-                                    <div class="h-full border border-dashed border-gray-300 rounded p-4 text-gray-700 bg-gray-50 flex items-center justify-center text-center">
+                                    <div
+                                        class="h-full border border-dashed border-gray-300 rounded p-4 text-gray-700 bg-gray-50 flex items-center justify-center text-center">
                                         Príspevok s týždenným menu momentálne nie je dostupný.
                                     </div>
                                 @endif
@@ -360,9 +365,9 @@
     </div>
 
 
-    <div class="w-full bg-white text-gray-800 overflow-hidden py-16">
+    <div class="block md:hidden w-full bg-white text-gray-800 overflow-hidden py-16">
         <!-- MOBILE ONLY: Carousel version -->
-        <div class="block md:hidden">
+        <div class="">
             <div class="text-center font-poppins space-y-6 px-6">
                 <h3 class="text-4xl font-bold text-gray-600">Naša ponuka</h3>
                 <hr class="border-t border-gray-300 w-1/2 mx-auto my-6" />
@@ -372,28 +377,23 @@
                 <div class="relative h-96 overflow-hidden md:h-96">
                     <!-- Item 1 (active) -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                        <img src="imgs/pizzain.png" class="block w-full h-full object-cover"
-                            alt="...">
+                        <img src="imgs/pizzain.png" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 2 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="imgs/burger.png" class="block w-full h-full object-cover"
-                            alt="...">
+                        <img src="imgs/burger.png" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 3 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="imgs/pasta.png" class="block w-full h-full object-cover"
-                            alt="...">
+                        <img src="imgs/pasta.png" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 4 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="imgs/pizzaout.png" class="block w-full h-full object-cover"
-                            alt="...">
+                        <img src="imgs/pizzaout.png" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 5 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="imgs/kitchen.png" class="block w-full h-full object-cover"
-                            alt="...">
+                        <img src="imgs/kitchen.png" class="block w-full h-full object-cover" alt="...">
                     </div>
                 </div>
                 <!-- Slider indicators -->
@@ -440,7 +440,7 @@
             </div>
         </div>
     </div>
-    <div class="hidden md:flex max-w-7xl mx-auto px-6 md:space-x-12 items-center">
+    <div class="hidden mt-12 mb-12 md:flex max-w-7xl mx-auto px-6 md:space-x-12 items-center">
         <!-- Left: Headline & Text -->
         <div class="w-1/2 space-y-6">
             <h3 class="text-4xl font-bold text-gray-600 font-poppins">Naša ponuka</h3>
@@ -453,7 +453,7 @@
             {{-- <a href="/ponuka.pdf" class="cta-button-black">Týždenné menu</a> --}}
         </div>
         <!-- Right: Static image preview (e.g., 1–2 representative images) -->
-        <div class="w-1/2 grid grid-cols-2 gap-4 mb-12">
+        <div class="w-1/2 grid grid-cols-2 gap-4">
             <a data-lightbox="gallery" data-title="Dish 1">
                 <img src="imgs/pizzain.png"
                     class="rounded-lg shadow object-cover h-48 w-full transform rotate-1 translate-x-2 translate-y-3"
@@ -499,33 +499,55 @@
             <div class="max-w-6xl mx-auto px-6 text-center font-poppins">
                 <h2 class="text-4xl font-extrabold mb-8">Služby</h2>
                 <hr class="border-t border-gray-300 w-24 mx-auto mb-12" />
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-24 mb-20">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-20">
                     <!-- Kuchyňa -->
                     <div class="flex flex-col items-center">
-                        <h3 class="text-2xl font-semibold mb-4">Kuchyňa</h3>
-                        <img src="imgs/kitchen.png" alt="Kuchyňa" class="h-40 w-64 object-cover mb-4 shadow-lg" />
-                        <p class="text-base leading-relaxed text-justify">Naša kuchyňa dotvára dokonalý zážitok.
-                            Moderná gastronómia s nádychom talianských chutí, inšpirovaná tajomstvom nášho šéfkuchára.
-                            Kvalitné suroviny, chrumkavé jedlá a precízna príprava sú pre nás samozrejmosťou. Každé
-                            jedlo je malým gurmánskym potešením.</p>
+                        <div
+                            class="bg-neutral-primary-soft bg-gray-900 rounded-2xl block max-w-sm rounded-base shadow-xs">
+                            <img src="imgs/kitchen.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
+                            <div class="p-6">
+                                <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Kuchyňa</h3>
+                                <p class="text-base text-gray-400 mb-6 text-justify">Naša kuchyňa dotvára dokonalý
+                                    zážitok.
+                                    Moderná gastronómia s nádychom talianských chutí, inšpirovaná tajomstvom nášho
+                                    šéfkuchára.
+                                    Kvalitné suroviny, chrumkavé jedlá a precízna príprava sú pre nás samozrejmosťou.
+                                    Každé
+                                    jedlo je malým gurmánskym potešením.</p>
+                            </div>
+                        </div>
                     </div>
                     <!-- Bar -->
                     <div class="flex flex-col items-center">
-                        <h3 class="text-2xl font-semibold mb-4">Bar</h3>
-                        <img src="imgs/bar.heic" alt="Bar" class="h-40 w-64 object-cover mb-4 shadow-lg" />
-                        <p class="text-base leading-relaxed text-justify">Bar je miestom, kde sa chute stretávajú s
-                            atmosférou. Ponúkame výber kvalitných vín, originálnych miešaných drinkov aj obľúbených
-                            klasík. Či už si prídete vychutnať drink po práci alebo osláviť výnimočný večer, náš bar vás
-                            nesklame.</p>
+                        <div
+                            class="bg-neutral-primary-soft bg-gray-900 rounded-2xl block max-w-sm rounded-base shadow-xs">
+                            <img src="imgs/bar.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
+                            <div class="p-6">
+                                <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Bar</h3>
+                                <p class="text-base text-gray-400 mb-6 text-justify">Bar je miestom, kde sa chute
+                                    stretávajú s
+                                    atmosférou. Ponúkame výber kvalitných vín, originálnych miešaných drinkov aj
+                                    obľúbených
+                                    klasík. Či už si prídete vychutnať drink po práci alebo osláviť výnimočný večer, náš
+                                    bar vás
+                                    nesklame.</p>
+                            </div>
+                        </div>
                     </div>
                     <!-- Rozvoz -->
                     <div class="flex flex-col items-center">
-                        <h3 class="text-2xl font-semibold mb-4">Rozvoz</h3>
-                        <img src="imgs/delivery_pack.png" alt="Rozvoz" class="h-40 w-64 object-cover mb-4 shadow-lg" />
-                        <p class="text-base leading-relaxed text-justify">Nemáte čas prísť osobne? Nevadí. Naše jedlá
+                        <div
+                            class="bg-neutral-primary-soft bg-gray-900 rounded-2xl block max-w-sm rounded-base shadow-xs">
+                            <img src="imgs/delivery_pack.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
+                            <div class="p-6">
+                                <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Rozvoz</h3>
+                                <p class="text-base text-gray-400 mb-6 text-justify">Nemáte čas prísť osobne? Nevadí. Naše
+                            jedlá
                             vám privezieme až ku dverám – čerstvé, horúce a chutné, akoby ste sedeli priamo v
-                            reštaurácii. Rýchly a spoľahlivý rozvoz je súčasťou nášho záväzku voči vašej spokojnosti.
-                        </p>
+                            reštaurácii. Rýchly a spoľahlivý rozvoz je súčasťou nášho záväzku voči vašej
+                            spokojnosti.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -534,8 +556,8 @@
     </div>
     <section id="gallery">
         <div class="flex flex-col items-center justify-center min-h-screen bg-white px-20">
-                    <script src="https://elfsightcdn.com/platform.js" async></script>
-                    <div class="elfsight-app-a12848b1-2d59-4099-9694-cdd694ccecfc" data-elfsight-app-lazy></div>
+            <script src="https://elfsightcdn.com/platform.js" async></script>
+            <div class="elfsight-app-a12848b1-2d59-4099-9694-cdd694ccecfc" data-elfsight-app-lazy></div>
         </div>
     </section>
 

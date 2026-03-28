@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Ciao Bella Pizzeria</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
     {{-- Tailwind CSS via CDN (for quick setup) --}}
     <script src="https://cdn.tailwindcss.com"></script>
