@@ -314,7 +314,7 @@
             </h1>
             <p id="opening-hours" class="text-xl mt-4 animate-fade-up">Loading...</p>
             <div class="flex gap-4 mt-8">
-                <a href="/menu" class="cta-button">Objednať</a>
+                <a href="https://www.bistro.sk/restauracia/ciao-bella" class="cta-button">Objednať</a>
                 <div x-data="{ showModal: false }"
                     x-effect="document.documentElement.classList.toggle('overflow-hidden', showModal)">
                     @php
