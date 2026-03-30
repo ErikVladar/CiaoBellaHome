@@ -541,11 +541,12 @@
                             <img src="imgs/delivery_pack.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
                             <div class="p-6">
                                 <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Rozvoz</h3>
-                                <p class="text-base text-gray-400 mb-6 text-justify">Nemáte čas prísť osobne? Nevadí. Naše
-                            jedlá
-                            vám privezieme až ku dverám – čerstvé, horúce a chutné, akoby ste sedeli priamo v
-                            reštaurácii. Rýchly a spoľahlivý rozvoz je súčasťou nášho záväzku voči vašej
-                            spokojnosti.</p>
+                                <p class="text-base text-gray-400 mb-6 text-justify">Nemáte čas prísť osobne? Nevadí.
+                                    Naše
+                                    jedlá
+                                    vám privezieme až ku dverám – čerstvé, horúce a chutné, akoby ste sedeli priamo v
+                                    reštaurácii. Rýchly a spoľahlivý rozvoz je súčasťou nášho záväzku voči vašej
+                                    spokojnosti.</p>
                             </div>
                         </div>
                     </div>
@@ -556,8 +557,10 @@
     </div>
     <section id="gallery">
         <div class="flex flex-col items-center justify-center min-h-screen bg-white px-20">
-            <script src="https://elfsightcdn.com/platform.js" async></script>
-            <div class="elfsight-app-a12848b1-2d59-4099-9694-cdd694ccecfc" data-elfsight-app-lazy></div>
+            {{-- <script src="https://elfsightcdn.com/platform.js" async></script>
+            <div class="elfsight-app-a12848b1-2d59-4099-9694-cdd694ccecfc" data-elfsight-app-lazy></div> --}}
+            <div class="sk-instagram-feed" data-embed-id="25668083"></div>
+            <script src="https://widgets.sociablekit.com/instagram-feed/widget.js" defer></script>
         </div>
     </section>
 
