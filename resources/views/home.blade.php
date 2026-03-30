@@ -304,8 +304,8 @@
         </nav>
     </div>
     <div class="h-screen w-full relative bg-cover bg-center"
-        style="background-image: url('imgs/image-from-rawpixel-id-5926993-jpeg.jpg');">
-        <div class="absolute inset-0 bg-black/60"></div>
+        style="background-image: url('imgs/main-bg.jpg');">
+        <div class="absolute inset-0 bg-black/80"></div>
 
         <div class="relative flex flex-col items-center justify-center h-full text-white text-center px-6">
             <h1 class="text-5xl md:text-6xl font-extrabold font-poppins animate-fade-down">
@@ -377,24 +377,24 @@
                 <div class="relative h-96 overflow-hidden md:h-96">
                     <!-- Item 1 (active) -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                        <img src="imgs/pizzain.png" class="block w-full h-full object-cover" alt="...">
+                        <img src="imgs/1.jpg" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 2 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="imgs/burger.png" class="block w-full h-full object-cover" alt="...">
+                        <img src="imgs/2.jpg" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 3 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="imgs/pasta.png" class="block w-full h-full object-cover" alt="...">
+                        <img src="imgs/3.jpg" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 4 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="imgs/pizzaout.png" class="block w-full h-full object-cover" alt="...">
+                        <img src="imgs/4.jpg" class="block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 5 -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    {{-- <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <img src="imgs/kitchen.png" class="block w-full h-full object-cover" alt="...">
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- Slider indicators -->
                 <div class="absolute z-30 flex w-full justify-center bottom-5 space-x-3 rtl:space-x-reverse">
@@ -406,8 +406,8 @@
                         data-carousel-slide-to="2"></button>
                     <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
                         data-carousel-slide-to="3"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5"
-                        data-carousel-slide-to="4"></button>
+                    {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5"
+                        data-carousel-slide-to="4"></button> --}}
                 </div>
 
                 <!-- Slider controls -->
@@ -455,22 +455,22 @@
         <!-- Right: Static image preview (e.g., 1–2 representative images) -->
         <div class="w-1/2 grid grid-cols-2 gap-4">
             <a data-lightbox="gallery" data-title="Dish 1">
-                <img src="imgs/pizzain.png"
+                <img src="imgs/1.jpg"
                     class="rounded-lg shadow object-cover h-48 w-full transform rotate-1 translate-x-2 translate-y-3"
                     alt="Italian dish">
             </a>
             <a data-lightbox="gallery" data-title="Dish 2">
-                <img src="imgs/burger.png"
+                <img src="imgs/2.jpg"
                     class="rounded-lg shadow object-cover h-52 w-full transform -rotate-1 translate-x-4 translate-y-2"
                     alt="Italian dish">
             </a>
             <a data-lightbox="gallery" data-title="Dish 3">
-                <img src="imgs/pasta.png"
+                <img src="imgs/3.jpg"
                     class="rounded-lg shadow object-cover h-44 w-full transform rotate-1 translate-x-3 translate-y-1"
                     alt="Italian dish">
             </a>
             <a data-lightbox="gallery" data-title="Dish 4">
-                <img src="imgs/pizzaout.png"
+                <img src="imgs/4.jpg"
                     class="rounded-lg shadow object-cover h-50 w-full transform -rotate-1 translate-x-3 translate-y-1"
                     alt="Italian dish">
             </a>
@@ -483,7 +483,7 @@
 
         <!-- Background Image -->
         <div class="absolute inset-0 bg-cover bg-center z-0"
-            style="background-image: url('{{ asset('imgs/image-from-rawpixel-id-5926993-jpeg.jpg') }}');">
+            style="background-image: url('{{ asset('imgs/main-bg.jpg') }}');">
         </div>
 
 
@@ -504,7 +504,7 @@
                     <div class="flex flex-col items-center">
                         <div
                             class="bg-neutral-primary-soft bg-gray-900 rounded-2xl block max-w-sm rounded-base shadow-xs">
-                            <img src="imgs/kitchen.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
+                            <img src="imgs/kitchen.jpg" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
                             <div class="p-6">
                                 <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Kuchyňa</h3>
                                 <p class="text-base text-gray-400 mb-6 text-justify">Naša kuchyňa dotvára dokonalý
@@ -521,7 +521,7 @@
                     <div class="flex flex-col items-center">
                         <div
                             class="bg-neutral-primary-soft bg-gray-900 rounded-2xl block max-w-sm rounded-base shadow-xs">
-                            <img src="imgs/bar.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
+                            <img src="imgs/bar_.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
                             <div class="p-6">
                                 <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Bar</h3>
                                 <p class="text-base text-gray-400 mb-6 text-justify">Bar je miestom, kde sa chute
@@ -538,7 +538,7 @@
                     <div class="flex flex-col items-center">
                         <div
                             class="bg-neutral-primary-soft bg-gray-900 rounded-2xl block max-w-sm rounded-base shadow-xs">
-                            <img src="imgs/delivery_pack.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
+                            <img src="imgs/rozvoz.png" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
                             <div class="p-6">
                                 <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Rozvoz</h3>
                                 <p class="text-base text-gray-400 mb-6 text-justify">Nemáte čas prísť osobne? Nevadí.
