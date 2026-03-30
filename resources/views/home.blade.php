@@ -504,7 +504,7 @@
                     <div class="flex flex-col items-center">
                         <div
                             class="bg-neutral-primary-soft bg-gray-900 rounded-2xl block max-w-sm rounded-base shadow-xs">
-                            <img src="imgs/kitchen.jpg" alt="Kuchyňa" class="h-64 w-full rounded-t-2xl" />
+                            <img src="imgs/kuchyna_.jpg" alt="Kuchyňa" class="h-64 w-full object-cover rounded-t-2xl" />
                             <div class="p-6">
                                 <h3 class="mb-6 text-2xl font-semibold tracking-tight text-heading">Kuchyňa</h3>
                                 <p class="text-base text-gray-400 mb-6 text-justify">Naša kuchyňa dotvára dokonalý
