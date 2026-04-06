@@ -4,6 +4,7 @@ use App\Support\InstagramWeeklyMenuResolver;
 use Illuminate\Foundation\Console\ClosureCommand;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('inspire', function () {
@@ -11,9 +12,24 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Artisan::command('instagram:refresh-weekly-menu', function () {
+Artisan::command('instagram:refresh-weekly-menu {--force-fresh : Skip cache fallback and require a newly resolved Instagram URL}', function () {
     /** @var ClosureCommand $this */
-    $result = app(InstagramWeeklyMenuResolver::class)->refreshCachedUrl();
+    $forceFresh = (bool) $this->option('force-fresh');
+
+    if ($forceFresh) {
+        Cache::forget(InstagramWeeklyMenuResolver::CACHE_KEY);
+    }
+
+    $result = app(InstagramWeeklyMenuResolver::class)->refreshCachedUrl(!$forceFresh);
+
+    if (($result['source'] ?? null) === 'cache_last_success') {
+        $this->warn('Instagram weekly menu URL was not freshly resolved; using cached last success.');
+        $this->line('Source: '.$result['source']);
+        $this->line('URL: '.$result['url']);
+        $this->line('Tip: run with --force-fresh to fail instead of reusing cache.');
+
+        return 1;
+    }
 
     if (!empty($result['url'])) {
         $this->info('Instagram weekly menu URL refreshed successfully.');

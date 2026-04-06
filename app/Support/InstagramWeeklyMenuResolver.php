@@ -31,7 +31,7 @@ class InstagramWeeklyMenuResolver
         ];
     }
 
-    public function refreshCachedUrl(): array
+    public function refreshCachedUrl(bool $allowCacheFallback = true): array
     {
         $instagramDebug = (bool) config('instagram.debug');
         $instagramToken = config('instagram.token');
@@ -228,7 +228,7 @@ class InstagramWeeklyMenuResolver
 
         if ($this->isValidInstagramPostUrl($finalUrl)) {
             Cache::put(self::CACHE_KEY, $finalUrl, now()->addDays(14));
-        } elseif ($cachedUrl) {
+        } elseif ($allowCacheFallback && $cachedUrl) {
             $finalUrl = $cachedUrl;
             $resolvedSource = 'cache_last_success';
         }
