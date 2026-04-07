@@ -268,7 +268,7 @@
                         <x-nav-link href="#gallery" :active="request()->is('gallery')">Galéria</x-nav-link>
                         <x-nav-link href="#contact" :active="request()->is('contact')">Kontakt</x-nav-link>
                         <x-nav-link href="#location" :active="request()->is('location')">Lokalita</x-nav-link>
-                        <x-nav-link href="/menu">Objednať</x-nav-link>
+                        <x-nav-link href="https://www.bistro.sk/restauracia/ciao-bella">Objednať</x-nav-link>
                     </div>
                     <div class="md:hidden z-50">
                         <button type="button"
@@ -295,8 +295,8 @@
                         class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Kontakt</a>
                     <a href="#location"
                         class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Lokalita</a>
-                    {{-- <a href="/menu"
-                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Objednať</a> --}}
+                    <a href="https://www.bistro.sk/restauracia/ciao-bella"
+                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Objednať</a>
                 </div>
             </div>
 
