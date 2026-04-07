@@ -295,8 +295,8 @@
                         class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Kontakt</a>
                     <a href="#location"
                         class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Lokalita</a>
-                    <a href="/menu"
-                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Objednať</a>
+                    {{-- <a href="/menu"
+                        class="block py-4 px-3 text-base font-medium text-white hover:bg-gray-700">Objednať</a> --}}
                 </div>
             </div>
 
